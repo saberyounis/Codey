@@ -1,0 +1,15 @@
+parameters:
+    category_manager.class: Blog\CoreBundle\Services\CategoryManager
+    post_manager.class: Blog\CoreBundle\Services\PostManager
+
+services:
+    category_manager:
+        class: %category_manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    post_manager:
+        class: %post_manager.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @form.factory

@@ -1,0 +1,45 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+
+{% block title %}Categorys list{% endblock %}
+
+{% block section %}
+    <h1>Category list</h1>
+
+    <table class="records_list">
+        <thead>
+        <tr>
+            <th>Created at</th>
+            <th>Updated at</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.createdAt | date('Y-m-d H:i:s') }}</a></td>
+                <td>{% if entity.updatedAt %}{{ entity.updatedAt | date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('blog_admin_category_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('blog_admin_category_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('blog_admin_category_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+{% endblock %}

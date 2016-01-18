@@ -1,0 +1,5 @@
+ {% for post in posts %}
+        {{ include('CoreBundle:Post:_post.html.twig', { post: post }) }}
+    {% else %}
+        <p>Category Not Conatain Posts</p>
+ {% endfor %}

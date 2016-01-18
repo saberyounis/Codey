@@ -1,0 +1,10 @@
+<article class="comment">
+    <header>
+        <p>
+            On <time datetime="{{ comment.createdAt | date('c') }}">{{ comment.createdAt | date }}</time>
+            In {{ comment.authorName }}
+        </p>
+    </header>
+
+    <p>{{ comment.body | nl2br }}</p>
+</article>

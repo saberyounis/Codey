@@ -1,0 +1,39 @@
+{% extends "CoreBundle::layout.html.twig" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block sidebar %}
+    <aside>
+        <h3>Category</h3>
+
+        <p>
+                {{ post.category.name }}
+        </p>
+    </aside>
+{% endblock %}
+
+{% block section %}
+
+    <article class="post">
+        <header>
+            <h1>{{ post.title }}</h1>
+            <p>
+                Post On <time datetime="{{ post.createdAt | date('c') }}">{{ post.createdAt | date }}</time>
+            </p>
+        </header>
+
+        <p>{{ post.body | nl2br }}</p>
+    </article>
+
+    <a id="comment"></a>
+    <h2>Comments</h2>
+
+    {% for comment in post.comments %}
+        {{ include('CoreBundle:Post:_comment.html.twig', { comment: comment }) }}
+    {% endfor %}
+
+    <h4>Writ Comment:</h4>
+
+    {{ form(form, { action: path('blog_core_post_createcomment', { slug: post.slug }) ~ '#comments' }) }}
+
+{% endblock %}

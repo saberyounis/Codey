@@ -1,0 +1,54 @@
+{% extends "CoreBundle::layout.html.twig" %}
+
+{% block title %}Post{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/core/js/jquery.js') }}"></script>
+    <script>
+
+        function filterPosts(){
+            var url = "{{ path('filter_posts') }}"; // the script where you handle the form input.
+            $("#post").show();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#filter_form select").serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    $('#post').html( data );
+                }
+            });
+        }
+
+        function trigerfilterPosts(){
+            $( "#filter_cat" ).change(function () {
+                filterPosts();
+            });
+        }
+
+        $( document ).ready(function() {
+            filterPosts();
+            trigerfilterPosts();
+        });
+    </script>
+{% endblock %}
+{% block sidebar %}
+    <aside>
+        <h3>Filter By Category</h3>
+        <br />
+        <div id="filter_form">
+        <select name="cat" id="filter_cat">
+            {% set pathInfo = path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) %}
+            {{ render(controller('CoreBundle:Category:getCategories', { pathInfo: pathInfo })) }}
+        </select>
+        </div>
+    </aside>
+{% endblock %}
+
+{% block section %}
+    <div id="post">
+    {% for post in posts %}
+        {{ include('CoreBundle:Post:_post.html.twig', { post: post }) }}
+    {% endfor %}
+    </div>
+{% endblock %}
